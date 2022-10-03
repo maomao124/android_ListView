@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity
                     .setContent("内容" + i + ".........");
             list.add(listViewInfo);
         }
+        final int[] count = {100};
 
         ListViewAdapter listViewAdapter = new ListViewAdapter(this, list);
 
@@ -73,6 +75,38 @@ public class MainActivity extends AppCompatActivity
                         .create()
                         .show();
                 return true;
+            }
+        });
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener()
+        {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState)
+            {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+            {
+                if (firstVisibleItem + visibleItemCount == totalItemCount)
+                {
+                    View last_view = listView.getChildAt(listView.getChildCount() - 1);
+                    if (last_view != null && last_view.getBottom() == listView.getHeight())
+                    {
+                        toastShow("滑动到底部了，正在加载新内容");
+                        for (int i = count[0] + 1; i <= count[0] + 100; i++)
+                        {
+                            ListViewInfo listViewInfo = new ListViewInfo()
+                                    .setIcon(R.drawable.ic_launcher_foreground)
+                                    .setTitle("标题" + i)
+                                    .setContent("内容" + i + ".........");
+                            list.add(listViewInfo);
+                        }
+                        count[0] = count[0] + 100;
+                        listViewAdapter.notifyDataSetChanged();
+                    }
+                }
             }
         });
     }
