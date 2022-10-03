@@ -1,11 +1,13 @@
 package mao.android_listview.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -93,6 +95,21 @@ public class ListViewAdapter extends BaseAdapter
             listViewHolder.icon = convertView.findViewById(R.id.icon);
             listViewHolder.title = convertView.findViewById(R.id.title);
             listViewHolder.content = convertView.findViewById(R.id.content);
+            listViewHolder.button = convertView.findViewById(R.id.Button);
+            listViewHolder.button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    new AlertDialog.Builder(context)
+                            .setTitle("提示")
+                            .setMessage("按钮被点击了,位于第" + (position + 1) + "个")
+                            .setPositiveButton("确定", null)
+                            .create()
+                            .show();
+
+                }
+            });
             convertView.setTag(listViewHolder);
         }
         else
@@ -103,6 +120,20 @@ public class ListViewAdapter extends BaseAdapter
         listViewHolder.icon.setImageResource(listViewInfo.getIcon());
         listViewHolder.title.setText(listViewInfo.getTitle());
         listViewHolder.content.setText(listViewInfo.getContent());
+        listViewHolder.button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                new AlertDialog.Builder(context)
+                        .setTitle("提示")
+                        .setMessage("按钮被点击了,位于第" + (position + 1) + "个")
+                        .setPositiveButton("确定", null)
+                        .create()
+                        .show();
+
+            }
+        });
         return convertView;
     }
 
@@ -121,5 +152,9 @@ public class ListViewAdapter extends BaseAdapter
          * 内容
          */
         public TextView content;
+        /**
+         * 按钮
+         */
+        public Button button;
     }
 }
