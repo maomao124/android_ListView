@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity
         ListViewAdapter listViewAdapter = new ListViewAdapter(this, list);
 
         listView.setAdapter(listViewAdapter);
+        //listView.setDivider(getResources().getDrawable(R.color.purple_200));
+        //listView.setDividerHeight(20);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
