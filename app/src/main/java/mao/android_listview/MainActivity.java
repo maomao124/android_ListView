@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        final boolean[] canRefresh = {false};
+
         listView.setOnScrollListener(new AbsListView.OnScrollListener()
         {
             @Override
@@ -89,6 +91,34 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
             {
+                if (firstVisibleItem == 0)
+                {
+                    View first_view = listView.getChildAt(0);
+                    if (first_view != null && first_view.getTop() == 0)
+                    {
+                        if (canRefresh[0])
+                        {
+                            toastShow("正在刷新...");
+                            list.clear();
+                            for (int i = 1; i <= 100; i++)
+                            {
+                                ListViewInfo listViewInfo = new ListViewInfo()
+                                        .setIcon(R.drawable.ic_launcher_foreground)
+                                        .setTitle("新的标题" + i)
+                                        .setContent("新的内容" + i + ".........");
+                                list.add(listViewInfo);
+                            }
+                            count[0] = 100;
+                            listViewAdapter.notifyDataSetChanged();
+                            canRefresh[0] = false;
+                        }
+                    }
+                    return;
+                }
+                if (firstVisibleItem > 0)
+                {
+                    canRefresh[0] = true;
+                }
                 if (firstVisibleItem + visibleItemCount == totalItemCount)
                 {
                     View last_view = listView.getChildAt(listView.getChildCount() - 1);
