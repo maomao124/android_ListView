@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         final boolean[] canRefresh = {false};
+        final long[] firstRefreshTime = {System.currentTimeMillis()};
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener()
         {
@@ -98,6 +99,13 @@ public class MainActivity extends AppCompatActivity
                     {
                         if (canRefresh[0])
                         {
+
+                            if (System.currentTimeMillis() - firstRefreshTime[0] > 3000)
+                            {
+                                toastShow("再次上划进行刷新页面");
+                                firstRefreshTime[0] = System.currentTimeMillis();
+                                return;
+                            }
                             toastShow("正在刷新...");
                             list.clear();
                             for (int i = 1; i <= 100; i++)
