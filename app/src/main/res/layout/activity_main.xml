@@ -7,9 +7,17 @@
         tools:context=".MainActivity"
         android:orientation="vertical">
 
+
     <ListView
             android:id="@+id/ListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:listSelector="@drawable/shape1" />
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="按钮" />
 
 </LinearLayout>
